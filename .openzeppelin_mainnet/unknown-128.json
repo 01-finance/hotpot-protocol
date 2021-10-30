@@ -2544,7 +2544,7 @@
           {
             "contract": "Gateway",
             "label": "config",
-            "type": "t_contract(IConfig)7488",
+            "type": "t_contract(IConfig)7508",
             "src": "contracts/Gateway.sol:87"
           },
           {
@@ -2562,13 +2562,13 @@
           {
             "contract": "Gateway",
             "label": "bindStatus",
-            "type": "t_enum(CrossStatus)4137",
+            "type": "t_enum(CrossStatus)4163",
             "src": "contracts/Gateway.sol:90"
           },
           {
             "contract": "Gateway",
             "label": "vault",
-            "type": "t_contract(IVault)7796",
+            "type": "t_contract(IVault)7816",
             "src": "contracts/Gateway.sol:91"
           },
           {
@@ -2592,7 +2592,7 @@
           {
             "contract": "Gateway",
             "label": "existedIds_deprecated",
-            "type": "t_mapping(t_uint256,t_enum(CrossStatus)4137)",
+            "type": "t_mapping(t_uint256,t_enum(CrossStatus)4163)",
             "src": "contracts/Gateway.sol:95"
           },
           {
@@ -2609,7 +2609,7 @@
           }
         ],
         "types": {
-          "t_contract(IConfig)7488": {
+          "t_contract(IConfig)7508": {
             "label": "contract IConfig"
           },
           "t_uint64": {
@@ -2618,7 +2618,7 @@
           "t_address": {
             "label": "address"
           },
-          "t_enum(CrossStatus)4137": {
+          "t_enum(CrossStatus)4163": {
             "label": "enum Gateway.CrossStatus",
             "members": [
               "NONE",
@@ -2627,7 +2627,7 @@
               "REVERTED"
             ]
           },
-          "t_contract(IVault)7796": {
+          "t_contract(IVault)7816": {
             "label": "contract IVault"
           },
           "t_contract(IERC20)1599": {
@@ -2636,7 +2636,170 @@
           "t_uint256": {
             "label": "uint256"
           },
-          "t_mapping(t_uint256,t_enum(CrossStatus)4137)": {
+          "t_mapping(t_uint256,t_enum(CrossStatus)4163)": {
+            "label": "mapping(uint256 => enum Gateway.CrossStatus)"
+          },
+          "t_array(t_bytes_storage)dyn_storage": {
+            "label": "bytes[]"
+          },
+          "t_bytes_storage": {
+            "label": "bytes"
+          },
+          "t_mapping(t_bytes32,t_uint256)": {
+            "label": "mapping(bytes32 => uint256)"
+          },
+          "t_bytes32": {
+            "label": "bytes32"
+          },
+          "t_array(t_uint256)49_storage": {
+            "label": "uint256[49]"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]"
+          },
+          "t_bool": {
+            "label": "bool"
+          }
+        }
+      }
+    },
+    "a6be11233fdb962f849d49b3189c1477bae78f9f86964017ee3fc8617da4a1b5": {
+      "address": "0x1EDb2BD2cDE7D4b8edfD7b025a74D9Db8ca47968",
+      "txHash": "0x7d2febdc4c1ea1ee5eb61323585da2cd7f499741d4afbd1f3ff4c9cfcdece06f",
+      "layout": {
+        "storage": [
+          {
+            "contract": "Initializable",
+            "label": "initialized",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts-ethereum-package/contracts/Initializable.sol:21"
+          },
+          {
+            "contract": "Initializable",
+            "label": "initializing",
+            "type": "t_bool",
+            "src": "@openzeppelin/contracts-ethereum-package/contracts/Initializable.sol:26"
+          },
+          {
+            "contract": "Initializable",
+            "label": "______gap",
+            "type": "t_array(t_uint256)50_storage",
+            "src": "@openzeppelin/contracts-ethereum-package/contracts/Initializable.sol:61"
+          },
+          {
+            "contract": "ContextUpgradeSafe",
+            "label": "__gap",
+            "type": "t_array(t_uint256)50_storage",
+            "src": "@openzeppelin/contracts-ethereum-package/contracts/GSN/Context.sol:37"
+          },
+          {
+            "contract": "OwnableUpgradeSafe",
+            "label": "_owner",
+            "type": "t_address",
+            "src": "@openzeppelin/contracts-ethereum-package/contracts/access/Ownable.sol:18"
+          },
+          {
+            "contract": "OwnableUpgradeSafe",
+            "label": "__gap",
+            "type": "t_array(t_uint256)49_storage",
+            "src": "@openzeppelin/contracts-ethereum-package/contracts/access/Ownable.sol:78"
+          },
+          {
+            "contract": "Gateway",
+            "label": "config",
+            "type": "t_contract(IConfig)7989",
+            "src": "contracts/Gateway.sol:232"
+          },
+          {
+            "contract": "Gateway",
+            "label": "remotePolyId",
+            "type": "t_uint64",
+            "src": "contracts/Gateway.sol:233"
+          },
+          {
+            "contract": "Gateway",
+            "label": "remoteGateway",
+            "type": "t_address",
+            "src": "contracts/Gateway.sol:234"
+          },
+          {
+            "contract": "Gateway",
+            "label": "bindStatus",
+            "type": "t_enum(CrossStatus)4644",
+            "src": "contracts/Gateway.sol:235"
+          },
+          {
+            "contract": "Gateway",
+            "label": "vault",
+            "type": "t_contract(IVault)8297",
+            "src": "contracts/Gateway.sol:236"
+          },
+          {
+            "contract": "Gateway",
+            "label": "token",
+            "type": "t_contract(IERC20)1599",
+            "src": "contracts/Gateway.sol:237"
+          },
+          {
+            "contract": "Gateway",
+            "label": "nextCrossId",
+            "type": "t_uint256",
+            "src": "contracts/Gateway.sol:238"
+          },
+          {
+            "contract": "Gateway",
+            "label": "fee",
+            "type": "t_uint256",
+            "src": "contracts/Gateway.sol:239"
+          },
+          {
+            "contract": "Gateway",
+            "label": "existedIds_deprecated",
+            "type": "t_mapping(t_uint256,t_enum(CrossStatus)4644)",
+            "src": "contracts/Gateway.sol:240"
+          },
+          {
+            "contract": "Gateway",
+            "label": "pending_deprecated",
+            "type": "t_array(t_bytes_storage)dyn_storage",
+            "src": "contracts/Gateway.sol:241"
+          },
+          {
+            "contract": "Gateway",
+            "label": "crossConfirms",
+            "type": "t_mapping(t_bytes32,t_uint256)",
+            "src": "contracts/Gateway.sol:242"
+          }
+        ],
+        "types": {
+          "t_contract(IConfig)7989": {
+            "label": "contract IConfig"
+          },
+          "t_uint64": {
+            "label": "uint64"
+          },
+          "t_address": {
+            "label": "address"
+          },
+          "t_enum(CrossStatus)4644": {
+            "label": "enum Gateway.CrossStatus",
+            "members": [
+              "NONE",
+              "PENDING",
+              "COMPLETED",
+              "REVERTED"
+            ]
+          },
+          "t_contract(IVault)8297": {
+            "label": "contract IVault"
+          },
+          "t_contract(IERC20)1599": {
+            "label": "contract IERC20"
+          },
+          "t_uint256": {
+            "label": "uint256"
+          },
+          "t_mapping(t_uint256,t_enum(CrossStatus)4644)": {
             "label": "mapping(uint256 => enum Gateway.CrossStatus)"
           },
           "t_array(t_bytes_storage)dyn_storage": {

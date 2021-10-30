@@ -36,6 +36,6 @@ UPGRADE=upgradeGateways
 
 NETWORK=`net arbitrum` $UPGRADE
 NETWORK=`net polygon` $UPGRADE
-#NETWORK=`net ok` $UPGRADE
-#NETWORK=`net heco` $UPGRADE
-#NETWORK=`net bsc` $UPGRADE
+NETWORK=`net ok` $UPGRADE
+NETWORK=`net heco` $UPGRADE
+NETWORK=`net bsc` $UPGRADE
