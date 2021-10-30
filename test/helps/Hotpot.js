@@ -287,14 +287,19 @@ class Hotpot {
         const CrossTransferSig = iface.getEventTopic('CrossTransfer');
         const crossLog = receipt.logs.find(log => log.topics[0] == CrossTransferSig)
         const crossEvent = iface.parseLog(crossLog);
+        const isCrossV2 = crossEvent.args.crossId.shr(24 * 8) >= 2;
 
         const abi = new ethers.utils.AbiCoder();
         const crossData = abi.encode(['uint256', 'address', 'uint256', 'uint256', 'int256'], ['crossId', 'to', 'amount', 'fee', 'feeFlux'].map(key => crossEvent.args[key]));
-        const srcGateway = srcChain.gateways[destChain.polyId][symbol];
-        const tx2 = await destChain.onCrossTransferByHotpoter(symbol, crossData, srcGateway.address, srcChain.polyId);
+        let tx2 = tx;
+        if (!isCrossV2) {
+            const srcGateway = srcChain.gateways[destChain.polyId][symbol];
+            tx2 = await destChain.onCrossTransferByHotpoter(symbol, crossData, srcGateway.address, srcChain.polyId);
+        }
         const destGateway = destChain.gateways[srcChain.polyId][symbol];
         const confirms = await destGateway.crossConfirms(ethers.utils.keccak256(crossData));
-        if (confirms.mask(254) != 3) throw `crossConfirms wrong! ${confirms.toHexString()}`;
+        if (confirms.mask(255) != (isCrossV2 ? 1 : 3)) throw `crossConfirms wrong! ${confirms.toHexString()}`;
+        if (confirms.shr(255) != 1) throw `crossExecute wrong: ${confirms.toHexString()}`;
         //const status = await destGateway.existedIds(crossEvent.args.crossId);
         //if (status == 0) throw `existedIds wrong! ${status}`;
         return [tx, tx2];
@@ -308,14 +313,19 @@ class Hotpot {
         const CrossTransferSig = iface.getEventTopic('CrossTransfer');
         const crossLog = receipt.logs.find(log => log.topics[0] == CrossTransferSig)
         const crossEvent = iface.parseLog(crossLog);
+        const isCrossV2 = crossEvent.args.crossId.shr(24 * 8) >= 2;
 
         const abi = new ethers.utils.AbiCoder();
         const crossData = abi.encode(['uint256', 'address', 'uint256', 'uint256', 'int256'], ['crossId', 'to', 'amount', 'fee', 'feeFlux'].map(key => crossEvent.args[key]));
-        const srcGateway = srcChain.gateways[destChain.polyId][symbol];
-        const tx2 = await destChain.onCrossTransferByHotpoter(symbol, crossData, srcGateway.address, srcChain.polyId);
+        let tx2 = tx;
+        if (!isCrossV2) {
+            const srcGateway = srcChain.gateways[destChain.polyId][symbol];
+            tx2 = await destChain.onCrossTransferByHotpoter(symbol, crossData, srcGateway.address, srcChain.polyId);
+        }
         const destGateway = destChain.gateways[srcChain.polyId][symbol];
         const confirms = await destGateway.crossConfirms(ethers.utils.keccak256(crossData));
-        if (confirms.mask(254) != 3) throw `crossConfirms wrong! ${confirms.toHexString()}`;
+        if (confirms.mask(255) != (isCrossV2 ? 1 : 3)) throw `crossConfirms wrong! ${confirms.toHexString()}`;
+        if (confirms.shr(255) != 1) throw `crossExecute wrong: ${confirms.toHexString()}`;
         //const status = await destGateway.existedIds(crossEvent.args.crossId);
         //if (status == 0) throw `existedIds wrong! ${status}`;
         return [tx, tx2];
@@ -329,15 +339,19 @@ class Hotpot {
         const CrossTransferSig = iface.getEventTopic('CrossTransferWithData');
         const crossLog = receipt.logs.find(log => log.topics[0] == CrossTransferSig)
         const crossEvent = iface.parseLog(crossLog);
+        const isCrossV2 = crossEvent.args.crossId.shr(24 * 8) >= 2;
 
         const abi = new ethers.utils.AbiCoder();
         const crossData = abi.encode(['uint256', 'address', 'uint256', 'uint256', 'int256', 'address', 'bytes'], ['crossId', 'to', 'amount', 'fee', 'feeFlux', 'from', 'extData'].map(key => crossEvent.args[key]));
-        const srcGateway = srcChain.gateways[destChain.polyId][symbol];
-        const tx2 = await destChain.onCrossTransferByHotpoter(symbol, crossData, srcGateway.address, srcChain.polyId);
-        //console.log(Number(tx2.gasLimit), Number(await tx2.wait().then(r => r.gasUsed)));
+        let tx2 = tx;
+        if (!isCrossV2) {
+            const srcGateway = srcChain.gateways[destChain.polyId][symbol];
+            tx2 = await destChain.onCrossTransferByHotpoter(symbol, crossData, srcGateway.address, srcChain.polyId);
+        }
         const destGateway = destChain.gateways[srcChain.polyId][symbol];
         const confirms = await destGateway.crossConfirms(ethers.utils.keccak256(crossData));
-        if (confirms.mask(254) != 3) throw `crossConfirms wrong! ${confirms.toHexString()}`;
+        if (confirms.mask(255) != (isCrossV2 ? 1 : 3)) throw `crossConfirms wrong! ${confirms.toHexString()}`;
+        if (confirms.shr(255) != 1) throw `crossExecute wrong: ${confirms.toHexString()}`;
         //const status = await destGateway.existedIds(crossEvent.args.crossId);
         //if (status == 0) throw `existedIds wrong! ${status}`;
         return [tx, tx2];

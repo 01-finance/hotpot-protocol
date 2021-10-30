@@ -21,4 +21,12 @@ library chainIds {
         if (polyId == 42161) return 19; // ARBITRUM
         revert("unsupported chainId");
     }
+
+    function thisPolyId() internal view returns (uint64 polyId) {
+        uint256 chainId;
+        assembly {
+            chainId := chainid()
+        }
+        return toPolyId(chainId);
+    }
 }
