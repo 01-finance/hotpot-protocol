@@ -69,7 +69,12 @@ module.exports = async function (hre) {
     const gateways = oldAddress[remotePolyId];
     const symbols = Object.keys(gateways);
     const chainName = chains._polyToName(remotePolyId);
-    console.log('to:', i, chainName, remotePolyId);
+    const ARBITRUM = "ARBITRUM";
+    const hasARBITRUM = [chains._name, chainName].includes(ARBITRUM);
+    console.log('to:', i, chainName, remotePolyId, chains._name, hasARBITRUM);
+    if (!hasARBITRUM) continue;
+    console.log("upgrade")
+    continue;
     for (let j = 0; j < symbols.length; j++) {
       const symbol = symbols[j];
       const gateway = gateways[symbol];

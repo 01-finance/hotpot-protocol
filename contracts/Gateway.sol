@@ -188,7 +188,7 @@ library CrossDataEncoder {
     ) internal view {
         uint256 crossId = data.getCrossId();
         CrossType typ = CrossType((crossId & CROSS_TYPE_MASK) >> CROSS_TYPE_OFFSET);
-        if (typ < CrossType.TRANSFER_V2) return; // skip checkcode in v1
+        if (isV1(typ)) return; // skip checkcode in v1
         //fromPolyId = 31337; // only hotpot testcase
         uint256 timestampMsg = (crossId & TIMESTAMP_MASK) >> TIMESTAMP_OFFSET;
         uint256 checkcodeMsg = (crossId & CHECKCODE_MASK);
@@ -197,6 +197,20 @@ library CrossDataEncoder {
         require(checkcodeMsg == _checkCode, "wrong checkcode");
         require(block.timestamp - timestampMsg > 2 minutes, "atleast delay 2 minutes");
         data.setCrossId(crossId); // backup
+    }
+
+    /// @dev v1 means it should use ploy network
+    function isV1(CrossType typ) internal pure returns (bool) {
+        return typ < CrossType.TRANSFER_V2;
+    }
+
+    function isV1(bytes memory data) internal pure returns (bool) {
+        return isV1(data.getCrossType());
+    }
+
+    function hasExtraData(bytes memory data) internal pure returns (bool) {
+        CrossType crossType = data.getCrossType();
+        return crossType == CrossType.TRANSFER_WITH_DATA || crossType == CrossType.TRANSFER_WITH_DATA_V2;
     }
 }
 
@@ -314,7 +328,7 @@ contract Gateway is OwnableUpgradeSafe, CrossBase, IGateway {
     }
 
     function confirmed(uint256 bitmap, bytes memory data) private pure returns (bool) {
-        uint256 threshold = data.getCrossType() >= CrossType.TRANSFER_V2 ? CONFIRM_THRESHOLD_V2 : CONFIRM_THRESHOLD;
+        uint256 threshold = data.isV1() ? CONFIRM_THRESHOLD : CONFIRM_THRESHOLD_V2;
         return countSetBits(bitmap) >= threshold;
     }
 
@@ -338,7 +352,9 @@ contract Gateway is OwnableUpgradeSafe, CrossBase, IGateway {
         uint256 metaFee = nativeToMeta(_fee);
         uint256 metaAmount = nativeToMeta(amount);
         bytes memory txData = CrossDataEncoder.encode(nextCrossId++, to, metaAmount, metaFee, _feeFlux);
-        CrossBase.crossTo(remotePolyId, remoteGateway, CROSS_METHOD, txData);
+        if (txData.isV1()) {
+            CrossBase.crossTo(remotePolyId, remoteGateway, CROSS_METHOD, txData);
+        }
         (uint256 tokenPrice, uint256 fluxPrice) = config.feePrice(address(token));
         emit CrossTransfer(txData.getCrossId(), from, to, metaAmount, metaFee, _feeFlux, tokenPrice, fluxPrice);
     }
@@ -354,7 +370,9 @@ contract Gateway is OwnableUpgradeSafe, CrossBase, IGateway {
         uint256 metaFee = nativeToMeta(_fee);
         uint256 metaAmount = nativeToMeta(amount);
         bytes memory txData = CrossDataEncoder.encode(nextCrossId++, to, metaAmount, metaFee, _feeFlux, from, data);
-        CrossBase.crossTo(remotePolyId, remoteGateway, CROSS_METHOD, txData);
+        if (txData.isV1()) {
+            CrossBase.crossTo(remotePolyId, remoteGateway, CROSS_METHOD, txData);
+        }
 
         (uint256 tokenPrice, uint256 fluxPrice) = config.feePrice(address(token));
         emit CrossTransferWithData(txData.getCrossId(), from, to, metaAmount, metaFee, _feeFlux, tokenPrice, fluxPrice, data);
@@ -497,9 +515,7 @@ contract Gateway is OwnableUpgradeSafe, CrossBase, IGateway {
 
     function onCrossTransferExecute(bytes calldata data) external {
         executeGuard(data); // safety check, if data is illegal, tx will revert
-        CrossType crossType = data.getCrossType();
-        if (crossType == CrossType.TRANSFER_WITH_DATA || crossType == CrossType.TRANSFER_WITH_DATA_V2) _onCrossTransferWithDataExecute(data);
-        else _onCrossTransferExecute(data);
+        data.hasExtraData() ? _onCrossTransferWithDataExecute(data) : _onCrossTransferExecute(data);
     }
 
     function _onCrossTransferByRole(
@@ -523,6 +539,7 @@ contract Gateway is OwnableUpgradeSafe, CrossBase, IGateway {
         bytes calldata fromAddress,
         uint64 fromPolyId
     ) external onlyManagerContract returns (bool) {
+        require(data.isV1(), "only V1 support poly network");
         address from = bytesToAddress(fromAddress);
         _onCrossTransferByRole(data, from, fromPolyId, Relayer.POLY);
         return true;

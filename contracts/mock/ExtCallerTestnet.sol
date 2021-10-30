@@ -29,7 +29,7 @@ library chainIds {
         assembly {
             chainId := chainid()
         }
-        require(chainId == 1337 || chainId == 31137, "only local env");
+        require(chainId == 1337 || chainId == 31337, "only local env");
         return toPolyId(chainId);
     }
 }
