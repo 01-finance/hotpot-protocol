@@ -18,7 +18,7 @@ library chainIds {
         if (chainId == 56) return 6; // BSC
         if (chainId == 1) return 2; // ETH
         if (chainId == 137) return 17; // POLYGON
-        if (polyId == 42161) return 19; // ARBITRUM
+        if (chainId == 42161) return 19; // ARBITRUM
         revert("unsupported chainId");
     }
 
