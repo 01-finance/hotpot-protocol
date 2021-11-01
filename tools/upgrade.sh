@@ -32,10 +32,10 @@ net() {
 
 npx hardhat compile
 
-UPGRADE=upgradeGateways
+UPGRADE=upgradeVaults
 
 NETWORK=`net arbitrum` $UPGRADE
-NETWORK=`net polygon` $UPGRADE
-NETWORK=`net ok` $UPGRADE
-NETWORK=`net heco` $UPGRADE
-NETWORK=`net bsc` $UPGRADE
+#NETWORK=`net polygon` $UPGRADE
+#NETWORK=`net ok` $UPGRADE
+#NETWORK=`net heco` $UPGRADE
+#NETWORK=`net bsc` $UPGRADE
