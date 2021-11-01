@@ -426,11 +426,12 @@ contract Gateway is OwnableUpgradeSafe, CrossBase, IGateway {
         uint256 _fee;
         uint256 _feeFlux;
         if (amount > 0) {
-            _fee = amount.mul(fee).div(FEE_DENOM);
             if (maxFluxFee > 0) {
-                _feeFlux = config.feeFlux(address(token), _fee);
+                _feeFlux = config.feeFlux(remotePolyId);
                 _fee = 0;
                 require(_feeFlux <= maxFluxFee, "exceed flux fee limit!");
+            } else {
+                _fee = config.feeToken(remotePolyId, address(token));
             }
             vault.depositFund(from, amount, _feeFlux); // amount includes fee
             require(_feeFlux < uint256(type(int256).max), "invalid fee");

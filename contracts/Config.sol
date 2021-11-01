@@ -26,6 +26,7 @@ contract Config is OwnableUpgradeSafe, IConfig {
     IPriceOracle public oracle;
     mapping(address => address) public override boundVault; // gateway=>vaults
     IExtCaller public override extCaller;
+    mapping(uint64 => uint256) public crossFee;
 
     function initialize(
         IEthCrossChainManagerProxy _ccmp,
@@ -70,13 +71,16 @@ contract Config is OwnableUpgradeSafe, IConfig {
         return (oracle.getPriceMan(token), oracle.getPriceMan(address(FLUX)));
     }
 
-    function feeFlux(address token, uint256 fee) external view override returns (uint256) {
-        uint256 _feePrice = oracle.getPriceMan(token);
+    function feeFlux(uint64 toPolyId) external view override returns (uint256) {
+        uint256 _crossFee = crossFee[toPolyId];
         uint256 fluxPrice = oracle.getPriceMan(address(FLUX));
-        uint8 tokenDecimals = ERC20UpgradeSafe(token).decimals();
-        uint8 fluxDecimals = ERC20UpgradeSafe(address(FLUX)).decimals();
-        uint256 _feeFlux = fee.mul(10**uint256(fluxDecimals - tokenDecimals)).mul(_feePrice).div(fluxPrice);
-        return _feeFlux.mul(80).div(100);
+        return _crossFee.mul(80).div(100).div(fluxPrice);
+    }
+
+    function feeToken(uint64 toPolyId, address token) external view override returns (uint256) {
+        uint256 _crossFee = crossFee[toPolyId];
+        uint256 tokenPrice = oracle.getPriceMan(token);
+        return _crossFee.div(tokenPrice);
     }
 
     function setCaller(IExtCaller _caller) external onlyOwner {

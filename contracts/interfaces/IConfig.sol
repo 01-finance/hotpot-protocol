@@ -13,7 +13,9 @@ interface IConfig {
 
     function getEthCrossChainManager() external view returns (IEthCrossChainManager);
 
-    function feeFlux(address token, uint256 amount) external view returns (uint256);
+    function feeFlux(uint64 toPolyId) external view returns (uint256);
+
+    function feeToken(uint64 toPolyId, address token) external view returns (uint256);
 
     function isCompromiser(address compromiser) external view returns (bool);
 
