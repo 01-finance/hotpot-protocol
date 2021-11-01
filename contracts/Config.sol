@@ -81,15 +81,13 @@ contract Config is OwnableUpgradeSafe, IConfig {
     }
 
     function feeFlux(uint64 toPolyId) external view override returns (uint256) {
-        uint256 _crossFee = crossFee[toPolyId];
-        uint256 fluxPrice = oracle.getPriceMan(address(FLUX));
-        return _crossFee.mul(80).div(100).div(fluxPrice);
+        return feeToken(toPolyId, address(FLUX)).mul(80).div(100);
     }
 
-    function feeToken(uint64 toPolyId, address token) external view override returns (uint256) {
+    function feeToken(uint64 toPolyId, address token) public view override returns (uint256) {
         uint256 _crossFee = crossFee[toPolyId];
         uint256 tokenPrice = oracle.getPriceMan(token);
-        return _crossFee.div(tokenPrice);
+        return _crossFee.mul(1e18).div(tokenPrice);
     }
 
     function setCaller(IExtCaller _caller) external onlyOwner {
@@ -99,11 +97,12 @@ contract Config is OwnableUpgradeSafe, IConfig {
     function setRouter(address _router) external onlyOwner {
         router = _router;
     }
-}
 
-contract ConfigFix is Config {
-    function fix() external {
-        require(address(FLUX) == address(0), "FLUX exist");
-        FLUX = IERC20(0x2338a5d62E9A766289934e8d2e83a443e8065b83);
+    function setCrossFee(uint64[] calldata polyIds, uint256[] calldata fees) external onlyOwner {
+        for (uint256 i = 0; i < polyIds.length; i++) {
+            uint64 polyId = polyIds[i];
+            uint256 fee = fees[i];
+            crossFee[polyId] = fee;
+        }
     }
 }

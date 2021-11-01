@@ -2,7 +2,7 @@ const { ethers, upgrades } = require('hardhat');
 const record = require('../helps/record');
 const ContractKey = ["Config"];
 const ContractFile = "Config";
-const Contract = "ConfigFix";
+const Contract = ContractFile;
 const DeployedBytecode = require(`../artifacts/contracts/${ContractFile}.sol/${Contract}.json`).deployedBytecode;
 
 function ContractAt(Contract, address) {
@@ -56,7 +56,6 @@ module.exports = async function (hre) {
     const oldC = await ContractAt(Contract, Config)
     const newC = await upgradeProxy(Config, Contract);
     console.log("FLUX:", await newC.FLUX())
-    await newC.fix();
     console.log(await oldC.isRouter(Deployed.RouterV2), await oldC.oracle())
     console.log(Deployed.ExtCaller, await oldC.extCaller())
     console.log("FLUX:", await newC.FLUX())
