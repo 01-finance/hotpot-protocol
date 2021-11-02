@@ -69,6 +69,8 @@ contract HotpotLens {
         address vault;
         uint256 vaultCash;
         uint256 vaultBorrowLimit;
+        uint256 feeFlux;
+        uint256 feeToken;
         uint256 tokenPrice;
         uint256 fluxPrice;
         uint256 tokenBalance;
@@ -93,6 +95,8 @@ contract HotpotLens {
                 vault: address(temps.vault),
                 vaultCash: temps.token.balanceOf(address(temps.vault)),
                 vaultBorrowLimit: getBorrowLimit(Vault(address(temps.vault))),
+                feeFlux: temps.config.feeFlux(remotePolyId),
+                feeToken: temps.config.feeToken(remotePolyId, address(temps.token)),
                 tokenPrice: tokenPrice,
                 fluxPrice: fluxPrice,
                 tokenAllowance: temps.token.allowance(account, address(temps.vault)),

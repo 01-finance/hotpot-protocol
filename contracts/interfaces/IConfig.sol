@@ -13,8 +13,6 @@ interface IConfig {
 
     function getEthCrossChainManager() external view returns (IEthCrossChainManager);
 
-    function feeFlux(address token, uint256 fee) external view returns (uint256);
-
     function feeFlux(uint64 toPolyId) external view returns (uint256);
 
     function feeToken(uint64 toPolyId, address token) external view returns (uint256);

@@ -31,7 +31,7 @@ const func = async function (hre) {
     const deployAcc = accounts[0].address;
     console.log(deployAcc);
 
-    const path = ['RouterV2'];
+    const path = ['RouterV3'];
     const deployed = record(hre.Record)._path(path);
     if (deployed) return;
 
@@ -42,7 +42,7 @@ const func = async function (hre) {
 
     await deploy('Router', {
         from: deployAcc,
-        args: [oracle, polyId.toAddress()],
+        args: [],
         log: true,
         deterministicDeployment: false,
     });

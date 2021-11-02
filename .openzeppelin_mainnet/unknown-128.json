@@ -2429,13 +2429,13 @@
           {
             "contract": "Config",
             "label": "ccmp",
-            "type": "t_contract(IEthCrossChainManagerProxy)7824",
+            "type": "t_contract(IEthCrossChainManagerProxy)7756",
             "src": "contracts/Config.sol:23"
           },
           {
             "contract": "Config",
             "label": "access",
-            "type": "t_contract(IAccess)7411",
+            "type": "t_contract(IAccess)7343",
             "src": "contracts/Config.sol:24"
           },
           {
@@ -2447,7 +2447,7 @@
           {
             "contract": "Config",
             "label": "oracle",
-            "type": "t_contract(IPriceOracle)7723",
+            "type": "t_contract(IPriceOracle)7655",
             "src": "contracts/Config.sol:26"
           },
           {
@@ -2459,7 +2459,7 @@
           {
             "contract": "Config",
             "label": "extCaller",
-            "type": "t_contract(IExtCaller)7527",
+            "type": "t_contract(IExtCaller)7459",
             "src": "contracts/Config.sol:28"
           }
         ],
@@ -2467,22 +2467,22 @@
           "t_contract(IERC20)1599": {
             "label": "contract IERC20"
           },
-          "t_contract(IEthCrossChainManagerProxy)7824": {
+          "t_contract(IEthCrossChainManagerProxy)7756": {
             "label": "contract IEthCrossChainManagerProxy"
           },
-          "t_contract(IAccess)7411": {
+          "t_contract(IAccess)7343": {
             "label": "contract IAccess"
           },
           "t_address": {
             "label": "address"
           },
-          "t_contract(IPriceOracle)7723": {
+          "t_contract(IPriceOracle)7655": {
             "label": "contract IPriceOracle"
           },
           "t_mapping(t_address,t_address)": {
             "label": "mapping(address => address)"
           },
-          "t_contract(IExtCaller)7527": {
+          "t_contract(IExtCaller)7459": {
             "label": "contract IExtCaller"
           },
           "t_array(t_uint256)49_storage": {
@@ -2663,9 +2663,9 @@
         }
       }
     },
-    "a6be11233fdb962f849d49b3189c1477bae78f9f86964017ee3fc8617da4a1b5": {
-      "address": "0x1EDb2BD2cDE7D4b8edfD7b025a74D9Db8ca47968",
-      "txHash": "0x7d2febdc4c1ea1ee5eb61323585da2cd7f499741d4afbd1f3ff4c9cfcdece06f",
+    "d10a769a32c54829e4fc194654b622daab01ef9cd51f06752d563206b95cb18e": {
+      "address": "0xeafC3Fece8609155580fF0E28EB83D5b4d30664b",
+      "txHash": "0xaa16dd73b8275175ed43c680f235b41c06c41a8baeae418e603135d38530a09a",
       "layout": {
         "storage": [
           {
@@ -2707,72 +2707,72 @@
           {
             "contract": "Gateway",
             "label": "config",
-            "type": "t_contract(IConfig)7989",
-            "src": "contracts/Gateway.sol:232"
+            "type": "t_contract(IConfig)7285",
+            "src": "contracts/Gateway.sol:87"
           },
           {
             "contract": "Gateway",
             "label": "remotePolyId",
             "type": "t_uint64",
-            "src": "contracts/Gateway.sol:233"
+            "src": "contracts/Gateway.sol:88"
           },
           {
             "contract": "Gateway",
             "label": "remoteGateway",
             "type": "t_address",
-            "src": "contracts/Gateway.sol:234"
+            "src": "contracts/Gateway.sol:89"
           },
           {
             "contract": "Gateway",
             "label": "bindStatus",
-            "type": "t_enum(CrossStatus)4644",
-            "src": "contracts/Gateway.sol:235"
+            "type": "t_enum(CrossStatus)4164",
+            "src": "contracts/Gateway.sol:90"
           },
           {
             "contract": "Gateway",
             "label": "vault",
-            "type": "t_contract(IVault)8297",
-            "src": "contracts/Gateway.sol:236"
+            "type": "t_contract(IVault)7593",
+            "src": "contracts/Gateway.sol:91"
           },
           {
             "contract": "Gateway",
             "label": "token",
             "type": "t_contract(IERC20)1599",
-            "src": "contracts/Gateway.sol:237"
+            "src": "contracts/Gateway.sol:92"
           },
           {
             "contract": "Gateway",
             "label": "nextCrossId",
             "type": "t_uint256",
-            "src": "contracts/Gateway.sol:238"
+            "src": "contracts/Gateway.sol:93"
           },
           {
             "contract": "Gateway",
             "label": "fee",
             "type": "t_uint256",
-            "src": "contracts/Gateway.sol:239"
+            "src": "contracts/Gateway.sol:94"
           },
           {
             "contract": "Gateway",
             "label": "existedIds_deprecated",
-            "type": "t_mapping(t_uint256,t_enum(CrossStatus)4644)",
-            "src": "contracts/Gateway.sol:240"
+            "type": "t_mapping(t_uint256,t_enum(CrossStatus)4164)",
+            "src": "contracts/Gateway.sol:95"
           },
           {
             "contract": "Gateway",
             "label": "pending_deprecated",
             "type": "t_array(t_bytes_storage)dyn_storage",
-            "src": "contracts/Gateway.sol:241"
+            "src": "contracts/Gateway.sol:96"
           },
           {
             "contract": "Gateway",
             "label": "crossConfirms",
             "type": "t_mapping(t_bytes32,t_uint256)",
-            "src": "contracts/Gateway.sol:242"
+            "src": "contracts/Gateway.sol:97"
           }
         ],
         "types": {
-          "t_contract(IConfig)7989": {
+          "t_contract(IConfig)7285": {
             "label": "contract IConfig"
           },
           "t_uint64": {
@@ -2781,7 +2781,7 @@
           "t_address": {
             "label": "address"
           },
-          "t_enum(CrossStatus)4644": {
+          "t_enum(CrossStatus)4164": {
             "label": "enum Gateway.CrossStatus",
             "members": [
               "NONE",
@@ -2790,7 +2790,7 @@
               "REVERTED"
             ]
           },
-          "t_contract(IVault)8297": {
+          "t_contract(IVault)7593": {
             "label": "contract IVault"
           },
           "t_contract(IERC20)1599": {
@@ -2799,7 +2799,7 @@
           "t_uint256": {
             "label": "uint256"
           },
-          "t_mapping(t_uint256,t_enum(CrossStatus)4644)": {
+          "t_mapping(t_uint256,t_enum(CrossStatus)4164)": {
             "label": "mapping(uint256 => enum Gateway.CrossStatus)"
           },
           "t_array(t_bytes_storage)dyn_storage": {
@@ -2826,9 +2826,9 @@
         }
       }
     },
-    "df7f631fa16880bf38e30b9f99b2b5184fccc46a18d8d71c4d4d26edf3f62845": {
-      "address": "0xd73aEDf199d44d0cA8f38025e14E716feA3C97c3",
-      "txHash": "0x883130fd4fa9f62903225441613774d925b3e7babd097a9c4c1ee7cbe4fd1018",
+    "dc651205e67b7c115150e2d5759bafa57507239f2052c8fab9876cd2f52fb10d": {
+      "address": "0x15c09ac5B28c8B940F4ACE39f616Ea8F5D4Ae3F1",
+      "txHash": "0x9243ea65dadda3c457dd2a8a2cf219530f4799df2c4c6809576b12cc03e30d1d",
       "layout": {
         "storage": [
           {
@@ -2868,114 +2868,84 @@
             "src": "@openzeppelin/contracts-ethereum-package/contracts/access/Ownable.sol:78"
           },
           {
-            "contract": "Gateway",
-            "label": "config",
-            "type": "t_contract(IConfig)7989",
-            "src": "contracts/Gateway.sol:232"
-          },
-          {
-            "contract": "Gateway",
-            "label": "remotePolyId",
-            "type": "t_uint64",
-            "src": "contracts/Gateway.sol:233"
-          },
-          {
-            "contract": "Gateway",
-            "label": "remoteGateway",
-            "type": "t_address",
-            "src": "contracts/Gateway.sol:234"
-          },
-          {
-            "contract": "Gateway",
-            "label": "bindStatus",
-            "type": "t_enum(CrossStatus)4644",
-            "src": "contracts/Gateway.sol:235"
-          },
-          {
-            "contract": "Gateway",
-            "label": "vault",
-            "type": "t_contract(IVault)8297",
-            "src": "contracts/Gateway.sol:236"
-          },
-          {
-            "contract": "Gateway",
-            "label": "token",
+            "contract": "Config",
+            "label": "FLUX",
             "type": "t_contract(IERC20)1599",
-            "src": "contracts/Gateway.sol:237"
+            "src": "contracts/Config.sol:22"
           },
           {
-            "contract": "Gateway",
-            "label": "nextCrossId",
-            "type": "t_uint256",
-            "src": "contracts/Gateway.sol:238"
+            "contract": "Config",
+            "label": "ccmp",
+            "type": "t_contract(IEthCrossChainManagerProxy)7621",
+            "src": "contracts/Config.sol:23"
           },
           {
-            "contract": "Gateway",
-            "label": "fee",
-            "type": "t_uint256",
-            "src": "contracts/Gateway.sol:239"
+            "contract": "Config",
+            "label": "access",
+            "type": "t_contract(IAccess)7201",
+            "src": "contracts/Config.sol:24"
           },
           {
-            "contract": "Gateway",
-            "label": "existedIds_deprecated",
-            "type": "t_mapping(t_uint256,t_enum(CrossStatus)4644)",
-            "src": "contracts/Gateway.sol:240"
+            "contract": "Config",
+            "label": "router",
+            "type": "t_address",
+            "src": "contracts/Config.sol:25"
           },
           {
-            "contract": "Gateway",
-            "label": "pending_deprecated",
-            "type": "t_array(t_bytes_storage)dyn_storage",
-            "src": "contracts/Gateway.sol:241"
+            "contract": "Config",
+            "label": "oracle",
+            "type": "t_contract(IPriceOracle)7520",
+            "src": "contracts/Config.sol:26"
           },
           {
-            "contract": "Gateway",
-            "label": "crossConfirms",
-            "type": "t_mapping(t_bytes32,t_uint256)",
-            "src": "contracts/Gateway.sol:242"
+            "contract": "Config",
+            "label": "boundVault",
+            "type": "t_mapping(t_address,t_address)",
+            "src": "contracts/Config.sol:27"
+          },
+          {
+            "contract": "Config",
+            "label": "extCaller",
+            "type": "t_contract(IExtCaller)7324",
+            "src": "contracts/Config.sol:28"
+          },
+          {
+            "contract": "Config",
+            "label": "crossFee",
+            "type": "t_mapping(t_uint64,t_uint256)",
+            "src": "contracts/Config.sol:29"
           }
         ],
         "types": {
-          "t_contract(IConfig)7989": {
-            "label": "contract IConfig"
+          "t_contract(IERC20)1599": {
+            "label": "contract IERC20"
           },
-          "t_uint64": {
-            "label": "uint64"
+          "t_contract(IEthCrossChainManagerProxy)7621": {
+            "label": "contract IEthCrossChainManagerProxy"
+          },
+          "t_contract(IAccess)7201": {
+            "label": "contract IAccess"
           },
           "t_address": {
             "label": "address"
           },
-          "t_enum(CrossStatus)4644": {
-            "label": "enum Gateway.CrossStatus",
-            "members": [
-              "NONE",
-              "PENDING",
-              "COMPLETED",
-              "REVERTED"
-            ]
+          "t_contract(IPriceOracle)7520": {
+            "label": "contract IPriceOracle"
           },
-          "t_contract(IVault)8297": {
-            "label": "contract IVault"
+          "t_mapping(t_address,t_address)": {
+            "label": "mapping(address => address)"
           },
-          "t_contract(IERC20)1599": {
-            "label": "contract IERC20"
+          "t_contract(IExtCaller)7324": {
+            "label": "contract IExtCaller"
+          },
+          "t_mapping(t_uint64,t_uint256)": {
+            "label": "mapping(uint64 => uint256)"
+          },
+          "t_uint64": {
+            "label": "uint64"
           },
           "t_uint256": {
             "label": "uint256"
-          },
-          "t_mapping(t_uint256,t_enum(CrossStatus)4644)": {
-            "label": "mapping(uint256 => enum Gateway.CrossStatus)"
-          },
-          "t_array(t_bytes_storage)dyn_storage": {
-            "label": "bytes[]"
-          },
-          "t_bytes_storage": {
-            "label": "bytes"
-          },
-          "t_mapping(t_bytes32,t_uint256)": {
-            "label": "mapping(bytes32 => uint256)"
-          },
-          "t_bytes32": {
-            "label": "bytes32"
           },
           "t_array(t_uint256)49_storage": {
             "label": "uint256[49]"
@@ -2987,6 +2957,14 @@
             "label": "bool"
           }
         }
+      }
+    },
+    "fd2396522a124a26ff620d4435f741fefcd35e76a7a862e2c722edb76334a849": {
+      "address": "0x411f2a7ABb29530f9b6749Fe9C3d9065565b1879",
+      "txHash": "0x4e84c9ba5b47e832594b3c420c326933de39c126b048be81aaa8474a6b12e3f0",
+      "layout": {
+        "storage": [],
+        "types": {}
       }
     }
   }

@@ -55,10 +55,14 @@ module.exports = async function (hre) {
     const Config = oldAddress;
     const oldC = await ContractAt(Contract, Config)
     const newC = await upgradeProxy(Config, Contract);
-    console.log("FLUX:", await newC.FLUX())
-    console.log(await oldC.isRouter(Deployed.RouterV2), await oldC.oracle())
-    console.log(Deployed.ExtCaller, await oldC.extCaller())
-    console.log("FLUX:", await newC.FLUX())
+    if (!(await newC.isRouter(Deployed.RouterV3))) {
+      console.log('setRouter')
+      await newC.setRouter(Deployed.RouterV3);
+    }
+    //console.log("FLUX:", await newC.FLUX())
+    //console.log(await oldC.isRouter(Deployed.RouterV2), await oldC.oracle())
+    //console.log(Deployed.ExtCaller, await oldC.extCaller())
+    //console.log("FLUX:", await newC.FLUX())
   }
 }
 module.exports.tags = ["upgradeConfig"];
