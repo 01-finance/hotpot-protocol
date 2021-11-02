@@ -78,7 +78,8 @@ contract Config is OwnableUpgradeSafe, IConfig {
     function feeToken(uint64 toPolyId, address token) public view override returns (uint256) {
         uint256 _crossFee = crossFee[toPolyId];
         uint256 tokenPrice = oracle.getPriceMan(token);
-        return _crossFee.mul(1e18).div(tokenPrice);
+        uint256 decimals = ERC20UpgradeSafe(token).decimals();
+        return _crossFee.mul(10**decimals).div(tokenPrice);
     }
 
     function setCaller(IExtCaller _caller) external onlyOwner {

@@ -32,7 +32,7 @@ net() {
 
 npx hardhat compile
 
-UPGRADE=upgradeLens
+UPGRADE=upgradeConfig
 
 NETWORK=`net arbitrum` $UPGRADE
 #NETWORK=`net polygon` $UPGRADE
