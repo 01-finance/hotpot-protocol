@@ -119,9 +119,4 @@ contract Vault is OwnableUpgradeSafe, ERC20UpgradeSafe, IVault, RewardDistributo
         emit DepositFund(msg.sender, from, amount, feeFlux);
         //repayToken();
     }
-
-    // deprecated
-    function pendingReward(address) external view returns (uint256) {
-        return 0;
-    }
 }

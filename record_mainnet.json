@@ -229,6 +229,7 @@
                 "ETH": "0x947892356303DCf7DacDeb22bd45ee81dc14ffd2"
             }
         },
-        "HotpotLens": "0xEC8b01233BC48123dE0fCe1758404928bEFe0472"
+        "HotpotLens": "0xEC8b01233BC48123dE0fCe1758404928bEFe0472",
+        "RouterV3": "0x8ac33A8EFEB16370356b74d3Db464dB8D7640AC3"
     }
 }

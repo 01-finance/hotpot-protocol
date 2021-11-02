@@ -45,6 +45,7 @@ async function getProxyImplementation(address) {
 const CodeCache = {}
 async function implCheck(address, newImplCode) {
   const impl = await getProxyImplementation(address);
+  console.log('implCheck:', impl)
   if (!CodeCache[impl]) {
     CodeCache[impl] = await ethers.provider.getCode(impl);
   }
@@ -76,7 +77,7 @@ module.exports = async function (hre) {
     for (let j = 0; j < symbols.length; j++) {
       const symbol = symbols[j];
       const gateway = gateways[symbol];
-      console.log('token:', chainName, symbol, gateway);
+      console.log('token:', chains._name, chainName, symbol, gateway);
       const oldC = await ContractAt(Contract, gateway)
       const newC = await upgradeProxy(gateway, Contract);
     }
