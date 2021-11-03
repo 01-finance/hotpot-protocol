@@ -16,9 +16,8 @@ import {IVault} from "./interfaces/IVault.sol";
 import {IExtCaller} from "./interfaces/IExtCaller.sol";
 import {IHotpotCallee} from "./interfaces/IHotpotCallee.sol";
 import {chainIds} from "./utils/chainIds.sol";
-// import {chainIds} from "./mock/ExtCallerTestnet.sol"; // only for test
 
-import "hardhat/console.sol";
+// import {chainIds} from "./mock/ExtCallerTestnet.sol"; // only for test
 
 abstract contract CrossBase {
     function getEthCrossChainManager() internal view virtual returns (IEthCrossChainManager);
