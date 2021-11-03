@@ -33,7 +33,7 @@ const func = async function (hre) {
 
     const path = ['RouterV3'];
     const deployed = record(hre.Record)._path(path);
-    if (deployed) return;
+    //if (deployed) return;
 
     const chains = ChainsData(hre.Chains);
     //const tokens = ChainsData(hre.Tokens);
