@@ -7,11 +7,11 @@ const bn = n => new Web3.utils.BN(n);
 
 const NETENV = 'mainnet';
 //BSC->HECO:DAI
-const SYMBOL = 'USDC';
+const SYMBOL = 'USDT';
 const Chains = [
     {
-        net: 'polygon',
-        tx: '0x4b118e9ddb110381c8b1ca56876bdd932a3470664c5dc42274db261bffc5b9ed'
+        net: 'bsc',
+        tx: '0x1ee9d4d23400de4966170b05d83724a680f5d7b1b90933c72cba6d1be43744b6'
     },
     {
         net: 'arbitrum'
@@ -115,7 +115,7 @@ async function main() {
         console.log('need confirm')
         const CONFIRM_THRESHOLD = await gateway.methods.CONFIRM_THRESHOLD().call();
         console.log('CONFIRM_THRESHOLD:', CONFIRM_THRESHOLD);
-        const r = await gateway.methods.onCrossTransferExecute(`0x${srcInput}`).call();
+        const r = await gateway.methods.onCrossTransferExecute(`0x${srcInput}`).call({ gas: 2000000 });
         console.log(r)
         //const tx = await gateway.methods.onCrossTransferByHotpoter(`0x${srcInput}`, srcGateway, srcChain.polyId);
         //const r = await gateway.eweb3.sendTx(tx, { gas: 1000000 });

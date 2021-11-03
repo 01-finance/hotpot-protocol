@@ -32,7 +32,13 @@ contract Router is Ownable, ReentrancyGuard, Pausable {
         address to,
         uint256 amount,
         uint256 maxFluxFee
-    ) external nonReentrant whenNotPaused {
+    ) external payable nonReentrant whenNotPaused {
+        if (msg.value > 0) {
+            // treat as weth
+            address vault = address(gate.vault());
+            (bool success, ) = vault.call{value: amount}("");
+            require(success, "Router:FAIL_TRANSFER");
+        }
         gate.crossTransferFrom(msg.sender, to, amount, maxFluxFee);
     }
 
