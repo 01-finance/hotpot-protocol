@@ -43,7 +43,7 @@ contract Vault is OwnableUpgradeSafe, ERC20UpgradeSafe, IVault, RewardDistributo
     }
     mapping(address => GateDebt) public override gateDebt; // deprecated
     uint256 public totalToken; // deprecated
-    address public constant WNative = 0x82aF49447D8a07e3bd95BD0d56f35241523fBab1;
+    address public constant WNative = 0x82aF49447D8a07e3bd95BD0d56f35241523fBab1; // ARBITRUM_WETH
 
     // totalToken == cash - sum(gateDebt) - reservedFee
 
@@ -67,6 +67,19 @@ contract Vault is OwnableUpgradeSafe, ERC20UpgradeSafe, IVault, RewardDistributo
     modifier onlyBound() {
         require(config.boundVault(msg.sender) == address(this), "Vault::onlyBound");
         _;
+    }
+
+    function isContract(address account) private view returns (bool) {
+        // This method relies on extcodesize, which returns 0 for contracts in
+        // construction, since the code is only stored at the end of the
+        // constructor execution.
+
+        uint256 size;
+        // solhint-disable-next-line no-inline-assembly
+        assembly {
+            size := extcodesize(account)
+        }
+        return size > 0;
     }
 
     function setFToken(IFToken _ftoken) external onlyOwner {
@@ -105,7 +118,7 @@ contract Vault is OwnableUpgradeSafe, ERC20UpgradeSafe, IVault, RewardDistributo
     ) external override onlyBound {
         uint256 cash = token.balanceOf(address(this));
         if (cash < amount) _borrowToken(amount - cash);
-        if (WNative == address(token) && address(config.extCaller()) != to) {
+        if (WNative == address(token) && !isContract(to)) {
             IaeWETH(WNative).withdrawTo(to, amount);
         } else {
             token.safeTransfer(to, amount);
