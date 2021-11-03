@@ -13,6 +13,7 @@ import {SafeERC20} from "@openzeppelin/contracts-ethereum-package/contracts/toke
 import {IConfig} from "./Config.sol";
 import {IVault} from "./interfaces/IVault.sol";
 import {IFToken} from "./interfaces/IFToken.sol";
+import {IaeWETH} from "./interfaces/IaeWETH.sol";
 
 // deprecated
 abstract contract RewardDistributor_deprecated {
@@ -42,6 +43,7 @@ contract Vault is OwnableUpgradeSafe, ERC20UpgradeSafe, IVault, RewardDistributo
     }
     mapping(address => GateDebt) public override gateDebt; // deprecated
     uint256 public totalToken; // deprecated
+    address public constant WNative = 0x82aF49447D8a07e3bd95BD0d56f35241523fBab1;
 
     // totalToken == cash - sum(gateDebt) - reservedFee
 
@@ -73,7 +75,11 @@ contract Vault is OwnableUpgradeSafe, ERC20UpgradeSafe, IVault, RewardDistributo
     }
 
     function _borrowToken(uint256 amount) private {
-        ftoken.borrow(amount);
+        if (WNative == address(token)) {
+            ftoken.borrow(address(this), amount, true);
+        } else {
+            ftoken.borrow(amount);
+        }
     }
 
     function repayToken() external {
@@ -99,7 +105,11 @@ contract Vault is OwnableUpgradeSafe, ERC20UpgradeSafe, IVault, RewardDistributo
     ) external override onlyBound {
         uint256 cash = token.balanceOf(address(this));
         if (cash < amount) _borrowToken(amount - cash);
-        token.safeTransfer(to, amount);
+        if (WNative == address(token) && address(config.extCaller()) != to) {
+            IaeWETH(WNative).withdrawTo(to, amount);
+        } else {
+            token.safeTransfer(to, amount);
+        }
         if (feeFlux < 0) {
             config.FLUX().safeTransfer(to, uint256(-feeFlux));
         }
@@ -112,11 +122,17 @@ contract Vault is OwnableUpgradeSafe, ERC20UpgradeSafe, IVault, RewardDistributo
         uint256 amount,
         uint256 feeFlux
     ) external override onlyBound {
-        token.safeTransferFrom(from, address(this), amount);
+        if (WNative == address(token) && address(this).balance >= amount) {
+            IaeWETH(WNative).deposit{value: address(this).balance}();
+        } else {
+            token.safeTransferFrom(from, address(this), amount);
+        }
         if (feeFlux > 0) {
             config.FLUX().safeTransferFrom(from, address(this), feeFlux);
         }
         emit DepositFund(msg.sender, from, amount, feeFlux);
         //repayToken();
     }
+
+    receive() external payable override {}
 }

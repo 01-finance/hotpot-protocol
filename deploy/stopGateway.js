@@ -57,4 +57,4 @@ const func = async function (hre) {
 };
 
 module.exports = func;
-func.tags = ['FixedGas'];
+func.tags = ['stopGateway'];

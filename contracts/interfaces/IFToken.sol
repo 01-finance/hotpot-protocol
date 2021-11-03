@@ -15,4 +15,14 @@ interface IFToken {
     function borrowBalanceOf(address acct) external view returns (uint256);
 
     function repay(uint256 amount) external;
+
+    function repay() external payable;
+
+    function borrow(address to, uint256 amount) external;
+
+    function borrow(
+        address to,
+        uint256 amount,
+        bool giveWETH
+    ) external;
 }
