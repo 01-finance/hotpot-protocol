@@ -424,7 +424,8 @@ contract Gateway is OwnableUpgradeSafe, CrossBase, IGateway {
         require(bindStatus == CrossStatus.COMPLETED, "bind not completed");
         uint256 _fee;
         uint256 _feeFlux;
-        if (amount > 0) {
+        {
+            // must pay native fee
             if (maxFluxFee > 0) {
                 _feeFlux = config.feeFlux(remotePolyId);
                 _fee = 0;

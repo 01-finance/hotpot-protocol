@@ -78,8 +78,8 @@ module.exports = async function (hre) {
       const symbol = symbols[j];
       const gateway = gateways[symbol];
       console.log('token:', chains._name, chainName, symbol, gateway);
-      //const oldC = await ContractAt(Contract, gateway)
-      //const newC = await upgradeProxy(gateway, Contract);
+      const oldC = await ContractAt(Contract, gateway)
+      const newC = await upgradeProxy(gateway, Contract);
     }
   }
 

@@ -50,6 +50,9 @@ module.exports = {
     chainB: {
       url: "http://127.0.0.1:12000"
     },
+    fork: {
+      url: "http://127.0.0.1:8545/"
+    },
     ...networks(mainnet, 'main', process.env.PRIKEY),
     ...networks(testnet, 'test', process.env.PRIKEY)
   },
