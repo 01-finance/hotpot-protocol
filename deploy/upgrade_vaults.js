@@ -66,9 +66,12 @@ module.exports = async function (hre) {
     const symbol = symbols[i];
     const vault = vaults[i];
     //if (symbol != 'DAI') continue;
-    console.log('symbol:', symbol);
-    const oldC = await ContractAt(Contract, vault)
-    const newC = await upgradeProxy(vault, Contract);
+    const isETH = symbol == 'ETH'
+    console.log('symbol:', symbol, isETH);
+    if (isETH) {
+      const oldC = await ContractAt(Contract, vault)
+      const newC = await upgradeProxy(vault, Contract);
+    }
     //await newC.fix(Deployed.Config);
     //console.log(i, await oldC.config())
   }

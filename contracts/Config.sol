@@ -26,6 +26,7 @@ contract Config is OwnableUpgradeSafe, IConfig {
     IPriceOracle public oracle;
     mapping(address => address) public override boundVault; // gateway=>vaults
     IExtCaller public override extCaller;
+    mapping(uint64 => uint256) public crossFee;
 
     function initialize(
         IEthCrossChainManagerProxy _ccmp,
@@ -70,13 +71,15 @@ contract Config is OwnableUpgradeSafe, IConfig {
         return (oracle.getPriceMan(token), oracle.getPriceMan(address(FLUX)));
     }
 
-    function feeFlux(address token, uint256 fee) external view override returns (uint256) {
-        uint256 _feePrice = oracle.getPriceMan(token);
-        uint256 fluxPrice = oracle.getPriceMan(address(FLUX));
-        uint8 tokenDecimals = ERC20UpgradeSafe(token).decimals();
-        uint8 fluxDecimals = ERC20UpgradeSafe(address(FLUX)).decimals();
-        uint256 _feeFlux = fee.mul(10**uint256(fluxDecimals - tokenDecimals)).mul(_feePrice).div(fluxPrice);
-        return _feeFlux.mul(80).div(100);
+    function feeFlux(uint64 toPolyId) external view override returns (uint256) {
+        return feeToken(toPolyId, address(FLUX)).mul(80).div(100);
+    }
+
+    function feeToken(uint64 toPolyId, address token) public view override returns (uint256) {
+        uint256 _crossFee = crossFee[toPolyId];
+        uint256 tokenPrice = oracle.getPriceMan(token);
+        uint256 decimals = ERC20UpgradeSafe(token).decimals();
+        return _crossFee.mul(10**decimals).div(tokenPrice);
     }
 
     function setCaller(IExtCaller _caller) external onlyOwner {
@@ -86,11 +89,12 @@ contract Config is OwnableUpgradeSafe, IConfig {
     function setRouter(address _router) external onlyOwner {
         router = _router;
     }
-}
 
-contract ConfigFix is Config {
-    function fix() external {
-        require(address(FLUX) == address(0), "FLUX exist");
-        FLUX = IERC20(0x2338a5d62E9A766289934e8d2e83a443e8065b83);
+    function setCrossFee(uint64[] calldata polyIds, uint256[] calldata fees) external onlyOwner {
+        for (uint256 i = 0; i < polyIds.length; i++) {
+            uint64 polyId = polyIds[i];
+            uint256 fee = fees[i];
+            crossFee[polyId] = fee;
+        }
     }
 }

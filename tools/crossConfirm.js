@@ -7,11 +7,11 @@ const bn = n => new Web3.utils.BN(n);
 
 const NETENV = 'mainnet';
 //BSC->HECO:DAI
-const SYMBOL = 'DAI';
+const SYMBOL = 'USDT';
 const Chains = [
     {
-        net: 'ok',
-        tx: '0x9d58ee1042b3b464e2786c44f3327c410bd533fa7f7c4cf6e957675d056cec6b'
+        net: 'polygon',
+        tx: '0x6a6c53fd9fc9ae2b709605bfef71d5f4e75b026f516bc882a65d944ae580981e'
     },
     {
         net: 'arbitrum'
@@ -97,7 +97,7 @@ async function main() {
         : srcChain.web3.eth.abi.decodeParameters(['uint256', 'address', 'uint256', 'uint256', 'int256'], srcInput);
 
     const srcHash = srcChain.web3.utils.keccak256(`0x${srcInput}`);
-    console.log('----Src: ', srcHash);
+    console.log('----SrcHash: ', srcHash);
     console.log('srcR: ', srcR);
     console.log('src:', Number(srcR[2]) / 1e18, Number(srcR[3]) / 1e18, Number(srcR[4]) / 1e18)
 
@@ -115,7 +115,7 @@ async function main() {
         console.log('need confirm')
         const CONFIRM_THRESHOLD = await gateway.methods.CONFIRM_THRESHOLD().call();
         console.log('CONFIRM_THRESHOLD:', CONFIRM_THRESHOLD);
-        const r = await gateway.methods.onCrossTransferExecute(`0x${srcInput}`).call();
+        const r = await gateway.methods.onCrossTransferExecute(`0x${srcInput}`).call({ gasLimit: 4000000 });
         console.log(r)
         //const tx = await gateway.methods.onCrossTransferByHotpoter(`0x${srcInput}`, srcGateway, srcChain.polyId);
         //const r = await gateway.eweb3.sendTx(tx, { gas: 1000000 });

@@ -1,8 +1,6 @@
 const record = require('../helps/record');
 const ChainsData = require('../helps/chains');
 
-const _ = undefined;
-
 Number.prototype.toAddress = function () {
     const hexStr = ethers.BigNumber.from(Number(this)).toHexString().slice(2);
     const pad = 40 - hexStr.length;
@@ -11,7 +9,6 @@ Number.prototype.toAddress = function () {
 String.prototype.toAddress = Number.prototype.toAddress;
 
 function ContractAt(Contract, address) {
-    console.log('ContractAt:', Contract, address);
     return ethers.getSigners().then(
         account => ethers.getContractAt(
             Contract,
@@ -19,6 +16,16 @@ function ContractAt(Contract, address) {
             account[0]
         )
     );
+}
+
+const u3 = ethers.utils.parseUnits('3', 18);
+const u9 = ethers.utils.parseUnits('9', 18);
+const GasFixFee = {
+    "BSC": [u3],
+    "HECO": [u3],
+    "OEC": [u3],
+    "POLYGON": [u3],
+    "ARBITRUM": [u9]
 }
 
 const func = async function (hre) {
@@ -31,27 +38,23 @@ const func = async function (hre) {
     const deployAcc = accounts[0].address;
     console.log(deployAcc);
 
-    const path = ['RouterV3'];
-    const deployed = record(hre.Record)._path(path);
-    //if (deployed) return;
+    const Deployed = record(hre.Record);
+    //const tokens = ChainsData(hre.Tokens);
 
     const chains = ChainsData(hre.Chains);
-    //const tokens = ChainsData(hre.Tokens);
-    const oracle = chains.Oracle;
-    const polyId = chains.polyId;
 
-    await deploy('Router', {
-        from: deployAcc,
-        args: [],
-        log: true,
-        deterministicDeployment: false,
-    });
+    const configC = await ContractAt('Config', Deployed.Config);
 
-    const router = await deployments.get('Router');
-    console.log('Router', router.address)
-
-    record(hre.Record, path, router.address, hre.chainId);
+    const remotePolyIds = Object.keys(Deployed.Gateways);
+    const gases = remotePolyIds.map(polyId => GasFixFee[chains._polyToName(polyId)]);
+    console.log(remotePolyIds, gases);
+    //return;
+    for (let polyId of remotePolyIds) {
+        console.log(polyId)
+        console.log("price:", polyId, await configC.crossFee(polyId))
+    }
+    await configC.setCrossFee(remotePolyIds, gases.map(g => g[0]));
 };
 
 module.exports = func;
-func.tags = ['Router'];
+func.tags = ['stopGateway'];

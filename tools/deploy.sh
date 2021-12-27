@@ -9,7 +9,7 @@ deploy() {
     yarn tags Lens
 }
 
-deployRouterV2() {
+deployRouterV3() {
     yarn tags Router
 }
 
@@ -31,13 +31,13 @@ net() {
 
 npx hardhat compile
 
-ACTION=bind
+ACTION=deployRouterV3
 
 NETWORK=`net arbitrum` $ACTION
-NETWORK=`net ok` $ACTION
-NETWORK=`net heco` $ACTION
-NETWORK=`net bsc` $ACTION
-NETWORK=`net polygon` $ACTION
+#NETWORK=`net ok` $ACTION
+#NETWORK=`net heco` $ACTION
+#NETWORK=`net bsc` $ACTION
+#NETWORK=`net polygon` $ACTION
 
 
 # 部署流程

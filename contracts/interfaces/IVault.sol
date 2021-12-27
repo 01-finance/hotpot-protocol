@@ -23,4 +23,6 @@ interface IVault {
     function gateDebt(address) external view returns (int256, int256);
 
     function config() external view returns (IConfig);
+
+    receive() external payable;
 }
